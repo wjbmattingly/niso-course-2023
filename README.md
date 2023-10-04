@@ -1,8 +1,18 @@
+# Bio
+
+William J.B. Mattingly, PhD is a Postdoctoral Fellow in the Smithsonian Institution's Data Science Lab. He specializes in the application of machine learning and natural language processing on archival and historical documents. He is the author of Introduction to Python for Digital Humanists (2023), content creator for Python Tutorials for Digital Humanities, and lead developer for the Bitter Aloe Project.
+
 # Course Summary
 
 This comprehensive course is designed to equip students with the essential skills and knowledge required to undertake text and data mining tasks. Throughout this course, students will be introduced to key concepts and tools of text and data mining, including data types, data structures, data pre-processing, text processing, data mining techniques, text mining techniques, and advanced topics in both data and text mining. Each session will include a Python component, discussing the importance of Python and its libraries in handling various aspects of text and data mining. Students are not expected to know Python, rather they will be introduced to how Python can solve key issues so that they are aware of its capabilities. By the end of the course, participants will have a solid understanding of text and data mining concepts, be proficient in using Python for text and data mining tasks, and be able to apply these skills to real-world library applications and case studies.
 
-# Calendar
+# Learning Outcomes
+
+1. Understanding of Data, Data Structures, and Complex Data Types
+2. Understanding of the main types of Machine Learning and their Applications
+3. Understanding of the key Python libraries for text and data mining
+4. Understanding of the primary methods for performing text and data mining
+
 
 
 # Calendar
@@ -60,23 +70,22 @@ This comprehensive course is designed to equip students with the essential skill
 4. Data Mining Techniques
     - Classification
     - Clustering
-    - Association Rule Mining
-    - Regression Analysis
-    - Python Component: Overview of Python libraries for implementing data mining techniques like Scikit-learn and Statsmodels.
-    - Python Libraries: Scikit-Learn
+    - Dimensionality Reduction
+    - Python Component: Overview of Python libraries for implementing data mining
+    - Python Libraries: Scikit-learn, UMAP, and HDBScan.
 
 5. Text Processing for Library Data
     - Text Cleaning: removing punctuation, numbers, and special characters from library text data
     - Text Transformation: tokenization, stemming, and lemmatization of library text data
     - Text Representation: bag-of-words, TF-IDF, and word embeddings for library text data
-    - Python Component: Introduction to Natural Language Processing (NLP) libraries in Python like NLTK and Spacy.
+    - Python Component: Introduction to Natural Language Processing (NLP) libraries in Python like NLTK and spaCy.
 
 6. Text Mining Techniques
     - Sentiment Analysis
     - Named Entity Recognition
     - Topic Modeling
     - Text Classification
-    - Python Component: Overview of Python libraries for implementing text mining techniques like Gensim and TextBlob.
+    - Python Component: Overview of Python libraries for implementing text mining techniques like BerTopic and LeetTopic.
 
 7. Vector Databases and Semantic Searching
     - Python Component: Overview of Python libraries for vector databases: Annoy, Weaviate
