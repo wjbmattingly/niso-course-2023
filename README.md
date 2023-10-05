@@ -53,16 +53,32 @@ This comprehensive course is designed to equip students with the essential skill
         - Overview of Python's role in the data mining process.
 
 2. Data and Machine Learning
+    - Machine Learning Overview
+    - The Role of Data in Machine Learning
+        - Rendering Images Numerically
+        - Rendering Texts Numerically
+        - Rendering Categorical Data Numerically
+    - Introduction to Types of Machine Learning:
+        - Supervised Learning
+        - Unsupervised Learning
+        - Reinforcement Learning
+    - Challenges Machine Learning
+    - Ethical Considerations
     - Python libraries:
         - Scikit-Learn
         - PyTorch and FastAI
         - Tensorflow and Keras
 
 3. Data Pre-processing for Libraries
-    - Data Cleaning: handling missing data, noise, and outliers in library databases
-    - Data Transformation: normalization, aggregation, and generalization of library data
-    - Data Reduction: dimensionality reduction, feature selection, and instance selection in library databases
-    - Python Component: Overview of Python libraries for data pre-processing like Pandas and NumPy
+    - Data Cleaning
+        - Handling missing data
+        - Working with noisy data
+        - Working with Outliers
+    - Data Transformation
+        - Data normalization
+    - Data Reduction
+        - Dimensionality Reduction
+        - Feature selection
     - Python Libraries:
         - NumPy
         - Pandas
@@ -71,8 +87,14 @@ This comprehensive course is designed to equip students with the essential skill
     - Classification
     - Clustering
     - Dimensionality Reduction
-    - Python Component: Overview of Python libraries for implementing data mining
-    - Python Libraries: Scikit-learn, UMAP, and HDBScan.
+        - PCA
+        - t-SNE
+        - UMAP
+        - Ivis
+    - Python Libraries
+        - Scikit-learn
+        - UMAP
+        - HDBscan
 
 5. Text Processing for Library Data
     - Text Cleaning: removing punctuation, numbers, and special characters from library text data
@@ -85,10 +107,46 @@ This comprehensive course is designed to equip students with the essential skill
     - Named Entity Recognition
     - Topic Modeling
     - Text Classification
-    - Python Component: Overview of Python libraries for implementing text mining techniques like BerTopic and LeetTopic.
+    - Python Libraries:
+        - Gensim
+        - spaCy
+        - BerTopic
+        - LeetTopic
 
 7. Vector Databases and Semantic Searching
-    - Python Component: Overview of Python libraries for vector databases: Annoy, Weaviate
+    - Refresher on Vectors for Text
+    - Vectors for Images
+    - Best Practices
+    - Machine Learning Models for Text
+        - SentenceTransformers
+    - Machine Learning Models for Images
+        - 
+    - Machine Learning Models for Images and Texts
+        - CLIP
+    - Python Component
+        - HuggingFace API
+        - SentenceTransformers
+        - Annoy
+        - Weaviate
 
 8. Building Data Driven Applications
-    - Python Component: Discussion on Python libraries and tools used in real-world library applications and case studies like Dash, Plotly, and Streamlit.
+    - Python Libraries
+        - Streamlit
+        - Gradio
+        - Dash
+        - Plotly
+
+
+# Calendar
+
+| Date         | Title                                        | Description                                                                                   | Python Libraries                                                                                                                                                          |
+|--------------|----------------------------------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 12 Oct 2023  | Introduction to Text and Data Mining         | - Introduction to the course and its structure. - Introduction to basic and complex data types and structures. - Overview of data mining concepts. - Role of Python in text and data mining. | - |
+| 19 Oct 2023  | Data and Machine Learning                    | - Overview of machine learning, role of data, and introduction to types of machine learning. - Challenges and ethical considerations in machine learning. | [Scikit-Learn](https://scikit-learn.org/), [PyTorch and FastAI](https://www.pytorch.org/), [Tensorflow and Keras](https://www.tensorflow.org/) |
+| 26 Oct 2023  | Data Pre-processing for Libraries            | - Techniques for data cleaning, transformation, and reduction. | [NumPy](https://numpy.org/), [Pandas](https://pandas.pydata.org/) |
+| 2 Nov 2023   | Data Mining Techniques                       | - Exploration of classification, clustering, dimensionality reduction (PCA, t-SNE, UMAP, Ivis), with a focus on library data. | [Scikit-Learn](https://scikit-learn.org/), [UMAP](https://umap-learn.readthedocs.io/), [HDBscan](https://hdbscan.readthedocs.io/) |
+| 9 Nov 2023   | Text Processing for Library Data             | - Techniques for text cleaning, transformation, and representation applied to library text data. Introduction to NLP libraries. | [NLTK](https://www.nltk.org/), [Spacy](https://spacy.io/) |
+| 16 Nov 2023  | Text Mining Techniques                       | - In-depth discussion on sentiment analysis, named entity recognition, topic modeling, and text classification. | [Gensim](https://radimrehurek.com/gensim/), [Spacy](https://spacy.io/), [BerTopic](https://maartengr.github.io/BERTopic/), [LeetTopic](https://github.com/wjbmattingly/LeetTopic) |
+| 23 Nov 2023  | *Thanksgiving - No Class*                    | - | - |
+| 30 Nov 2023  | Vector Databases and Semantic Searching      | - Overview of vectors for text and images, best practices, machine learning models for text and images, and introduction to vector databases and semantic searching libraries. | [HuggingFace API](https://huggingface.co/api), [SentenceTransformers](https://www.sbert.net/), [Annoy](https://github.com/spotify/annoy), [Weaviate](https://weaviate.io/) |
+| 7 Dec 2023   | Building Data Driven Applications            | - Overview of Python libraries and tools used for building data-driven applications with real-world case studies. | [Streamlit](https://streamlit.io/), [Gradio](https://gradio.app/), [Dash](https://plotly.com/dash/), [Plotly](https://plotly.com/python/) |
