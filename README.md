@@ -34,24 +34,26 @@ This comprehensive course is designed to equip students with the essential skill
 
 ## Thursday, October 12, 2023: Introduction to Text and Data Mining
 
-    - Introduction to the course and its structure
-    - Introduction to basic and complex data types and structures
-    - Overview of data mining concepts
-    - Role of Python in text and data mining
+- Introduction to the course and its structure
+- Introduction to basic and complex data types and structures
+- Overview of data mining concepts
+- Role of Python in text and data mining
+
+---
 
 ## Thursday, October 19, 2023: Data and Machine Learning
 
-    - Machine Learning Overview
-    - The Role of Data in Machine Learning
-        - Rendering Images Numerically
-        - Rendering Texts Numerically
-        - Rendering Categorical Data Numerically
-    - Introduction to Types of Machine Learning:
-        - Supervised Learning
-        - Unsupervised Learning
-        - Reinforcement Learning
-    - Challenges Machine Learning
-    - Ethical Considerations
+- Machine Learning Overview
+- The Role of Data in Machine Learning
+    - Rendering Images Numerically
+    - Rendering Texts Numerically
+    - Rendering Categorical Data Numerically
+- Introduction to Types of Machine Learning:
+    - Supervised Learning
+    - Unsupervised Learning
+    - Reinforcement Learning
+- Challenges Machine Learning
+- Ethical Considerations
     
 ### Resources shared:
 
@@ -59,32 +61,36 @@ This comprehensive course is designed to equip students with the essential skill
 - [PyTorch and FastAI](https://www.pytorch.org/)
 - [Tensorflow and Keras](https://www.tensorflow.org/)
 
+---
+
 ## Thursday, October 26, 2023: Data Pre-processing for Libraries
 
-    - Data Cleaning
-        - Handling missing data
-        - Working with noisy data
-        - Working with Outliers
-    - Data Transformation
-        - Data normalization
-    - Data Reduction
-        - Dimensionality Reduction
-        - Feature selection
+- Data Cleaning
+    - Handling missing data
+    - Working with noisy data
+    - Working with Outliers
+- Data Transformation
+    - Data normalization
+- Data Reduction
+    - Dimensionality Reduction
+    - Feature selection
     
 ### Resources shared:
 
 - [NumPy](https://numpy.org/)
 - [Pandas](https://pandas.pydata.org/)
 
+---
+
 ## Thursday, November 2, 2023: Data Mining Techniques
 
-    - Classification
-    - Clustering
-    - Dimensionality Reduction
-        - PCA
-        - t-SNE
-        - UMAP
-        - Ivis
+- Classification
+- Clustering
+- Dimensionality Reduction
+    - PCA
+    - t-SNE
+    - UMAP
+    - Ivis
     
 ### Resources shared:
 
@@ -92,24 +98,28 @@ This comprehensive course is designed to equip students with the essential skill
 - [UMAP](https://umap-learn.readthedocs.io/)
 - [HDBscan](https://hdbscan.readthedocs.io/)
 
+---
+
 ## Thursday, November 9, 2023: Text Processing for Library Data
 
-    - Text Cleaning: removing punctuation, numbers, and special characters from library text data
-    - Text Transformation: tokenization, stemming, and lemmatization of library text data
-    - Text Representation: bag-of-words, TF-IDF, and word embeddings for library text data
-    - Python Component: Introduction to Natural Language Processing (NLP) libraries in Python like NLTK and spaCy.
+- Text Cleaning: removing punctuation, numbers, and special characters from library text data
+- Text Transformation: tokenization, stemming, and lemmatization of library text data
+- Text Representation: bag-of-words, TF-IDF, and word embeddings for library text data
+- Python Component: Introduction to Natural Language Processing (NLP) libraries in Python like NLTK and spaCy.
     
 ### Resources shared:
 
 - [NLTK](https://www.nltk.org/)
 - [Spacy](https://spacy.io/)
 
+---
+
 ## Thursday, November 16, 2023: Text Mining Techniques
 
-    - Sentiment Analysis
-    - Named Entity Recognition
-    - Topic Modeling
-    - Text Classification
+- Sentiment Analysis
+- Named Entity Recognition
+- Topic Modeling
+- Text Classification
 
 ### Resources shared:
 
@@ -118,19 +128,23 @@ This comprehensive course is designed to equip students with the essential skill
 - [BerTopic](https://maartengr.github.io/BERTopic/)
 - [LeetTopic](https://github.com/wjbmattingly/LeetTopic)
 
+---
+
 ## Thursday, November 23, 2023: Thanksgiving - No Class
+
+---
 
 ## Thursday, November 30, 2023: Vector Databases and Semantic Searching
 
-    - Refresher on Vectors for Text
-    - Vectors for Images
-    - Best Practices
-    - Machine Learning Models for Text
-        - SentenceTransformers
-    - Machine Learning Models for Images
-        - 
-    - Machine Learning Models for Images and Texts
-        - CLIP
+- Refresher on Vectors for Text
+- Vectors for Images
+- Best Practices
+- Machine Learning Models for Text
+    - SentenceTransformers
+- Machine Learning Models for Images
+    - 
+- Machine Learning Models for Images and Texts
+    - CLIP
     
 ### Resources shared:
 
@@ -139,9 +153,11 @@ This comprehensive course is designed to equip students with the essential skill
 - [Annoy](https://github.com/spotify/annoy)
 - [Weaviate](https://weaviate.io/)
 
+---
+
 ## Thursday, December 7, 2023: Building Data Driven Applications
-    - More Forthcoming...
-    - Overview of Python libraries and tools used for building data-driven applications with real-world case studies
+- More Forthcoming...
+- Overview of Python libraries and tools used for building data-driven applications with real-world case studies
     
 ### Resources shared:
 
