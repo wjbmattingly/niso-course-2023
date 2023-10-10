@@ -42,16 +42,16 @@ This comprehensive course is designed to equip students with the essential skill
 ## Thursday, October 19, 2023: Data and Machine Learning
 
     - Machine Learning Overview
-        - The Role of Data in Machine Learning
-            - Rendering Images Numerically
-            - Rendering Texts Numerically
-            - Rendering Categorical Data Numerically
-        - Introduction to Types of Machine Learning:
-            - Supervised Learning
-            - Unsupervised Learning
-            - Reinforcement Learning
-        - Challenges Machine Learning
-        - Ethical Considerations
+    - The Role of Data in Machine Learning
+        - Rendering Images Numerically
+        - Rendering Texts Numerically
+        - Rendering Categorical Data Numerically
+    - Introduction to Types of Machine Learning:
+        - Supervised Learning
+        - Unsupervised Learning
+        - Reinforcement Learning
+    - Challenges Machine Learning
+    - Ethical Considerations
     
 ### Resources shared:
 
