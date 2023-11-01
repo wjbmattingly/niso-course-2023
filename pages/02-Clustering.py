@@ -1,11 +1,10 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-from sklearn.decomposition import PCA
-from sklearn.manifold import TSNE
-from sklearn.preprocessing import StandardScaler, LabelEncoder
-from umap import UMAP
 import seaborn as sns
+from umap import UMAP
+from hdbscan import HDBSCAN
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+import plotly.express as px
 
 # Load dataset
 @st.cache_resource
@@ -98,6 +97,14 @@ def load_planets_data():
     
     return data
 
+
+# Encoding categorical features
+def encode_features(df, features):
+    le = LabelEncoder()
+    for feature in features:
+        df[feature] = le.fit_transform(df[feature])
+    return df
+
 # Create a dictionary mapping dataset names to their loaders
 dataset_loaders = {
     "Titanic": load_titanic_data,
@@ -111,83 +118,48 @@ df = dataset_loaders[dataset]()
 
 # Sidebar - Feature selection
 st.sidebar.header('Feature Selection')
-all_features = df.columns.tolist()
-selected_features = st.sidebar.multiselect(
-    'Select features to reduce', 
-    options=all_features,
-    default=all_features
-)
+numeric_features = df.columns.tolist()
+numeric_features = [n for n in numeric_features if "UMAP" not in n and "cluster" not in n]
+selected_features = st.sidebar.multiselect('Select features for dimensionality reduction:', options=numeric_features, default=numeric_features)
 
-# Sidebar - Dimensionality Reduction Choice
-st.sidebar.header('Dimensionality Reduction')
-reduction_method = st.sidebar.radio("Choose a dimensionality reduction method:", ('PCA', 't-SNE', 'UMAP'))
+# Sidebar - UMAP parameters
+st.sidebar.header('UMAP Parameters')
+n_neighbors = st.sidebar.slider('n_neighbors', 2, 200, 15)
+min_dist = st.sidebar.slider('min_dist', 0.0, 1.0, 0.1)
+# n_components = st.sidebar.slider('n_components', 2, 5, 2)
+n_components = 2
+metric = st.sidebar.selectbox('metric', ['euclidean', 'manhattan', 'chebyshev', 'minkowski', 'canberra', 'braycurtis', 'mahalanobis'])
 
-# Sidebar - Color selection
-color_column = st.sidebar.selectbox('Select column for color coding:', options=df.columns)
+# Sidebar - HDBSCAN parameters
+st.sidebar.header('HDBSCAN Parameters')
+min_cluster_size = st.sidebar.slider('min_cluster_size', 5, 50, 15)
+min_samples = st.sidebar.slider('min_samples', 1, 50, 5)
+
+# Perform UMAP reduction
+st.sidebar.subheader('Run UMAP')
+if st.sidebar.button('Run UMAP'):
+    scaler = StandardScaler()
+    scaled_data = scaler.fit_transform(df[selected_features])
+    umap_reducer = UMAP(n_neighbors=n_neighbors, min_dist=min_dist, n_components=2, metric=metric)
+    embedding = umap_reducer.fit_transform(scaled_data)
+    # Add the UMAP components to the dataframe
+    for i in range(n_components):
+        df[f'UMAP_{i+1}'] = embedding[:, i]
+
+# Perform HDBSCAN clustering
+st.sidebar.subheader('Run HDBSCAN')
+if st.sidebar.button('Run HDBSCAN'):
+    hdbscan_cluster = HDBSCAN(min_cluster_size=min_cluster_size, min_samples=min_samples)
+    categorical_features = df.select_dtypes(include=['object', 'category']).columns.tolist()
+    if categorical_features:
+        df = encode_features(df, categorical_features)
+    df['cluster'] = hdbscan_cluster.fit_predict(df[selected_features])
 
 # Main - Show dataframe
 main_expander = st.expander("Dataset")
 main_expander.write(df)
 
-# Preprocessing function
-def preprocess_df(df, features):
-    df_processed = df[features].copy()
-    
-    # Encode categorical features if selected
-    for feature in features:
-        if df_processed[feature].dtype == 'object' or df_processed[feature].dtype.name == 'category':
-            le = LabelEncoder()
-            df_processed[feature] = le.fit_transform(df_processed[feature].astype(str))
-    
-    # Scale features
-    scaler = StandardScaler()
-    df_processed = pd.DataFrame(scaler.fit_transform(df_processed), columns=features)
-    
-    return df_processed
-
-# Perform dimensionality reduction
-def reduce_dimensions(method, df, features, additional_hover_data=None):
-
-    processed_df = preprocess_df(df, features)
-
-    if method == 'PCA':
-        model = PCA(n_components=2)
-    elif method == 't-SNE':
-        model = TSNE(n_components=2, random_state=42)
-    elif method == 'UMAP':
-        model = UMAP(n_components=2, random_state=42)
-    
-    result = model.fit_transform(processed_df)
-    reduced_data = pd.DataFrame(result, columns=['Dim1', 'Dim2'])
-
-    # Merge the reduced data with the original selected features for hover information
-    hover_data = df[features].reset_index(drop=True)
-    if additional_hover_data:
-        hover_data = pd.concat([hover_data, df[additional_hover_data].reset_index(drop=True)], axis=1)
-    reduced_data = pd.concat([reduced_data, hover_data], axis=1)
-    
-    return reduced_data
-
-
-additional_hover_columns = [column for column in df.columns if column not in selected_features]
-# Perform and plot dimensionality reduction
-if selected_features:
-    st.write(f"## Dimensionality Reduction using {reduction_method}")
-    reduced_data = reduce_dimensions(reduction_method, df, selected_features, additional_hover_columns)
-
-    # Now, ensure all columns for hover data are included, regardless of selection
-    all_hover_data = selected_features + additional_hover_columns
-
-    # Use Plotly for interactive scatter plot
-    fig = px.scatter(
-        reduced_data,
-        x='Dim1',
-        y='Dim2',
-        color=reduced_data[color_column].astype(str) if color_column in reduced_data.columns else None,
-        hover_data=all_hover_data
-    )
-    fig.update_traces(marker=dict(size=10),
-                      selector=dict(mode='markers'))
-    fig.update_layout(title=f'{reduction_method} Results', title_x=0.5)
-    st.plotly_chart(fig, use_container_width=True)
-
+# Visualization
+if 'UMAP_1' in df.columns and 'cluster' in df.columns:
+    fig = px.scatter(df, x='UMAP_1', y='UMAP_2', color='cluster', hover_data=df.columns)
+    st.plotly_chart(fig)
