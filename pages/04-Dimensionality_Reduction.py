@@ -8,8 +8,8 @@ from umap import UMAP
 import seaborn as sns
 
 # Load dataset
-@st.cache_resource
-def load_titanic_data():
+@st.cache_data
+def load_titanic_data_dr():
     data = sns.load_dataset('titanic')
 
     
@@ -38,8 +38,8 @@ def load_titanic_data():
     data = data.reset_index(drop=True)
     return data
 
-@st.cache_resource
-def load_iris_data():
+@st.cache_data
+def load_iris_data_dr():
     # Load the iris dataset
     data = sns.load_dataset('iris')
     
@@ -68,8 +68,8 @@ def load_iris_data():
     data = data.reset_index(drop=True)
     return data
 
-@st.cache_resource
-def load_planets_data():
+@st.cache_data
+def load_planets_data_dr():
     # Load the dataset from Seaborn
     data = sns.load_dataset('planets')
 
@@ -100,9 +100,9 @@ def load_planets_data():
 
 # Create a dictionary mapping dataset names to their loaders
 dataset_loaders = {
-    "Titanic": load_titanic_data,
-    "Iris": load_iris_data,
-    "Planets": load_planets_data
+    "Titanic": load_titanic_data_dr,
+    "Iris": load_iris_data_dr,
+    "Planets": load_planets_data_dr
 }
 
 # Use the dictionary to select and load the dataset

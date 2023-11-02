@@ -7,7 +7,7 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 import plotly.express as px
 
 # Load dataset
-@st.cache_resource
+@st.cache_data
 def load_titanic_data():
     data = sns.load_dataset('titanic')
 
@@ -37,7 +37,7 @@ def load_titanic_data():
     data = data.reset_index(drop=True)
     return data
 
-@st.cache_resource
+@st.cache_data
 def load_iris_data():
     # Load the iris dataset
     data = sns.load_dataset('iris')
@@ -67,7 +67,7 @@ def load_iris_data():
     data = data.reset_index(drop=True)
     return data
 
-@st.cache_resource
+@st.cache_data
 def load_planets_data():
     # Load the dataset from Seaborn
     data = sns.load_dataset('planets')
@@ -136,30 +136,38 @@ min_cluster_size = st.sidebar.slider('min_cluster_size', 5, 50, 15)
 min_samples = st.sidebar.slider('min_samples', 1, 50, 5)
 
 # Perform UMAP reduction
-st.sidebar.subheader('Run UMAP')
-if st.sidebar.button('Run UMAP'):
+# Perform UMAP reduction
+# st.sidebar.subheader('Run UMAP and HDBScan')
+if st.sidebar.button('Run UMAP and HDBScan'):
+    # Encode categorical features before scaling
+    categorical_features = df.select_dtypes(include=['object', 'category']).columns.tolist()
+    if categorical_features:
+        df = encode_features(df, categorical_features)
+        
+    # Ensure only selected numeric features are scaled
+    numeric_features_selected = [feature for feature in selected_features if feature in df.select_dtypes(include=['number']).columns]
+    
     scaler = StandardScaler()
-    scaled_data = scaler.fit_transform(df[selected_features])
-    umap_reducer = UMAP(n_neighbors=n_neighbors, min_dist=min_dist, n_components=2, metric=metric)
+    scaled_data = scaler.fit_transform(df[numeric_features_selected])
+    
+    umap_reducer = UMAP(n_neighbors=n_neighbors, min_dist=min_dist, n_components=n_components, metric=metric)
     embedding = umap_reducer.fit_transform(scaled_data)
+    
     # Add the UMAP components to the dataframe
     for i in range(n_components):
         df[f'UMAP_{i+1}'] = embedding[:, i]
 
-# Perform HDBSCAN clustering
-st.sidebar.subheader('Run HDBSCAN')
-if st.sidebar.button('Run HDBSCAN'):
     hdbscan_cluster = HDBSCAN(min_cluster_size=min_cluster_size, min_samples=min_samples)
     categorical_features = df.select_dtypes(include=['object', 'category']).columns.tolist()
     if categorical_features:
         df = encode_features(df, categorical_features)
     df['cluster'] = hdbscan_cluster.fit_predict(df[selected_features])
 
-# Main - Show dataframe
-main_expander = st.expander("Dataset")
-main_expander.write(df)
+    # Main - Show dataframe
+    main_expander = st.expander("Dataset")
+    main_expander.write(df)
 
-# Visualization
-if 'UMAP_1' in df.columns and 'cluster' in df.columns:
+    # Visualization
+
     fig = px.scatter(df, x='UMAP_1', y='UMAP_2', color='cluster', hover_data=df.columns)
     st.plotly_chart(fig)
