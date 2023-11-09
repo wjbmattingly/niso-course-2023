@@ -85,23 +85,24 @@ This comprehensive course is designed to equip students with the essential skill
 ## Thursday, November 2, 2023: Data Mining Techniques
 
 - Classification
-- Clustering
-- Dimensionality Reduction
-    - PCA
-    - t-SNE
-    - UMAP
-    - Ivis
+- Types of Classification
+    - Binary Classification
+    - Multiclass Classification
+    - Multilabel Classification
+    - Hierarchical Classification
+- Resources for Open-Source Machine Learning Models
     
 ### Resources shared:
-
-- [Scikit-Learn](https://scikit-learn.org/)
-- [UMAP](https://umap-learn.readthedocs.io/)
-- [HDBscan](https://hdbscan.readthedocs.io/)
-
+- [Hugging Face](https://huggingface.co/) - The platform where the machine learning community collaborates on models, datasets, and applications.
+- [Hugging Face DistilBERT-base-uncased](https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english?text=we+enjoy+food) - An open source machine learning model. This model is a fine-tune checkpoint of [DistilBERT-base-uncased](https://huggingface.co/distilbert-base-uncased), fine-tuned on SST-2. This model reaches an accuracy of 91.3 on the dev set (for comparison, Bert bert-base-uncased version reaches an accuracy of 92.7).
+- [Hugging Face Dataset Card for "cardiffnlp/tweet_topic_multi"](https://huggingface.co/datasets/cardiffnlp/tweet_topic_multi?row=3) - This is the official repository of TweetTopic (["Twitter Topic Classification , COLING main conference 2022"](https://arxiv.org/abs/2209.09824)), a topic classification dataset on Twitter with 19 labels. Each instance of TweetTopic comes with a timestamp which distributes from September 2019 to August 2021. See [cardiffnlp/tweet_topic_single](https://huggingface.co/datasets/cardiffnlp/tweet_topic_single) for single label version of TweetTopic. The tweet collection used in TweetTopic is same as what used in [TweetNER7](https://huggingface.co/datasets/tner/tweetner7). The dataset is integrated in [TweetNLP](https://tweetnlp.org/) too.
+- [Data Mining Teaching Tool](https://data-science-teaching.streamlit.app/) - App by Streamlit
 ---
 
 ## Thursday, November 9, 2023: Text Processing for Library Data
 
+- Clustering
+- Dimensionality Reduction
 - Text Cleaning: removing punctuation, numbers, and special characters from library text data
 - Text Transformation: tokenization, stemming, and lemmatization of library text data
 - Text Representation: bag-of-words, TF-IDF, and word embeddings for library text data
