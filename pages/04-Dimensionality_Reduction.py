@@ -186,7 +186,7 @@ if selected_features:
         color=reduced_data[color_column].astype(str) if color_column in reduced_data.columns else None,
         hover_data=all_hover_data
     )
-    fig.update_traces(marker=dict(size=10),
+    fig.update_traces(marker=dict(size=5),
                       selector=dict(mode='markers'))
     fig.update_layout(title=f'{reduction_method} Results', title_x=0.5)
     st.plotly_chart(fig, use_container_width=True)
