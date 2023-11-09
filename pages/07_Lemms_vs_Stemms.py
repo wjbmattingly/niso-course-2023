@@ -64,7 +64,6 @@ def main():
                     st.write(' '.join(spacy_lemmatized_words))
     else:
         st.write("Your goal is to write a query that returns a hit for 'friends running' in each of the lines below.")
-        option = st.checkbox("Use lemmas?")
         texts = [
             "The friends ran to the store.",
             "The friends run to to the store.",
@@ -73,7 +72,9 @@ def main():
             "The friend is running."
         ]
         st.write(texts)
+        
         query = st.text_input("Write your query here")
+        option = st.checkbox("Use lemmas?")
         col1, col2 = st.columns(2)
         if st.button("Test query"):
             for text in texts:
