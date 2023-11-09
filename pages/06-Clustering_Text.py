@@ -1,73 +1,79 @@
 import streamlit as st
+import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 import umap.umap_ as umap
-from sklearn.datasets import fetch_20newsgroups
 import plotly.express as px
-import pandas as pd
-import string
 import spacy
+from sentence_transformers import SentenceTransformer
+import numpy as np
 
 # Load the spaCy model
 nlp = spacy.load("en_core_web_sm")
 
+# Load the sentence-transformers model
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
 # Function to load data
 @st.cache_data
-def load_data(categories):
-    newsgroups_data = fetch_20newsgroups(subset='all', categories=categories,
-                                         remove=('headers', 'footers', 'quotes'))
-    return newsgroups_data.data[:200]
+def load_data():
+    df = pd.read_parquet('data/processed_texts.parquet')
+    return df
 
-# Function to preprocess documents
-def preprocess_documents(documents, lemmatize, remove_punctuation):
-    preprocessed_documents = []
-    for doc in nlp.pipe(documents, disable=["ner", "parser"]): # Disable unnecessary pipelines
-        if lemmatize:
-            if remove_punctuation:
-                preprocessed_documents.append(" ".join(token.lemma_ for token in doc if token.lemma_ != '-PRON-' and token.is_punct != True))
-            else:
-                preprocessed_documents.append(" ".join(token.lemma_ for token in doc if token.lemma_ != '-PRON-'))
-        else:
-            if remove_punctuation:
-                preprocessed_documents.append(" ".join(token.text for token in doc if token.is_punct != True))
-            else:
-                preprocessed_documents.append(" ".join(token.text for token in doc))
-    return preprocessed_documents
+# Function to preprocess documents based on user selection
+def preprocess_documents(df, preprocess_type):
+    if preprocess_type == 'lemma':
+        return df['text_no_punct_lemma'].tolist()
+    elif preprocess_type == 'lemma_and_punct':
+        return df['text_no_punct'].tolist()
+    elif preprocess_type == 'punct':
+        return df['original_text'].tolist()
+    elif preprocess_type == 'word_embeddings':
+        return df['ml_vectors'].tolist()
 
-st.title('TF-IDF Clustering of 20 Newsgroups Data with UMAP')
+st.title('Clustering of 20 Newsgroups Data with UMAP and Various Preprocessing')
 
 # Sidebar options
 st.sidebar.header('Options')
-selected_categories = ["rec.sport.baseball", "sci.space"]
+selected_preprocess = st.sidebar.selectbox('Select preprocessing method', 
+                                           ('lemma', 'lemma_and_punct', 'punct', 'word_embeddings'))
 num_clusters = st.sidebar.slider('Select number of clusters', min_value=2, max_value=20, value=5)
-lemmatize = st.sidebar.checkbox('Lemmatize text', value=True)
-remove_punctuation = st.sidebar.checkbox('Remove punctuation', value=True)
 
-# Load and preprocess data
-documents = load_data(selected_categories)
-st.write(f'Loaded {len(documents)} documents.')
+# Load data
+df = load_data()
+st.write(f'Loaded {len(df)} documents.')
 
-if st.sidebar.button("Preprocess and Cluster Data"):
-    with st.spinner('Preprocessing data...'):
-        documents = preprocess_documents(documents, lemmatize, remove_punctuation)
-        st.success('Preprocessing complete.')
+if st.sidebar.button("Cluster Data"):
+    with st.spinner('Processing data...'):
+        documents = preprocess_documents(df, selected_preprocess)
 
-    # Proceed with vectorization and clustering
-    vectorizer = TfidfVectorizer(stop_words='english')
-    X = vectorizer.fit_transform(documents)
+        # Vectorization is not needed for word embeddings
+        if selected_preprocess != 'word_embeddings':
+            vectorizer = TfidfVectorizer(stop_words='english')
+            X = vectorizer.fit_transform(documents)
+        else:
+            X = np.array(documents)
 
-    kmeans = KMeans(n_clusters=num_clusters)
-    kmeans.fit(X)
-    labels = kmeans.labels_
+        # Clustering
+        kmeans = KMeans(n_clusters=num_clusters)
+        kmeans.fit(X)
+        labels = kmeans.labels_
 
-    reducer = umap.UMAP()
-    X_reduced = reducer.fit_transform(X)
+        # Dimensionality reduction
+        reducer = umap.UMAP()
+        X_reduced = reducer.fit_transform(X)
 
-    df = pd.DataFrame({'UMAP1': X_reduced[:, 0], 'UMAP2': X_reduced[:, 1], 'cluster': labels, 'text': documents})
+        df['UMAP1'] = X_reduced[:, 0]
+        df['UMAP2'] = X_reduced[:, 1]
+        df['cluster'] = labels
+        if selected_preprocess != 'word_embeddings':
+            df['text'] = documents
+        else:
+            df['text'] = df['original_text']
 
-    # Plot
-    fig = px.scatter(df, x='UMAP1', y='UMAP2', color='cluster', hover_data=['text'])
-    fig.update_traces(marker=dict(size=7, opacity=0.7, line=dict(width=1, color='DarkSlateGrey')), selector=dict(mode='markers'))
-    fig.update_layout(legend=dict(title='Cluster'), hovermode='closest')
-    st.plotly_chart(fig)
-    st.markdown('**Note:** Hover over points in the plot to see the text.')
+        # Plot
+        fig = px.scatter(df, x='UMAP1', y='UMAP2', color='cluster', hover_data=['text'])
+        fig.update_traces(marker=dict(size=7, opacity=0.7, line=dict(width=1, color='DarkSlateGrey')), selector=dict(mode='markers'))
+        fig.update_layout(legend=dict(title='Cluster'), hovermode='closest')
+        st.plotly_chart(fig)
+        st.markdown('**Note:** Hover over points in the plot to see the text.')
