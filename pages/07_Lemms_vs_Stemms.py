@@ -1,14 +1,12 @@
 import streamlit as st
-from nltk.stem import PorterStemmer
-from nltk.stem import WordNetLemmatizer
 import spacy
 import nltk
 
 nltk.download("wordnet")
 
 # Initialize NLTK stemmer and lemmatizer
-nltk_stemmer = PorterStemmer()
-nltk_lemmatizer = WordNetLemmatizer()
+nltk_stemmer = nltk.stem.PorterStemmer()
+nltk_lemmatizer = nltk.stem.WordNetLemmatizer()
 
 # Load spaCy English tokenizer, tagger, parser, NER, and word vectors
 nlp = spacy.load("en_core_web_sm")
