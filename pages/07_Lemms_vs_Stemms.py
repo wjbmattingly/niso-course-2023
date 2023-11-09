@@ -16,7 +16,8 @@ sample_texts = [
     "The children are running rapidly and the games have started.",
     "She had a better understanding after reading the book.",
     "The cats are sitting on the windowsill.",
-    "They pursued their studies every day."
+    "They pursued their studies every day.",
+    "Write Custom Sentence"  # Add this option for custom text input
 ]
 
 # Streamlit application
@@ -25,33 +26,39 @@ def main():
     st.title('Stemming vs. Lemmatization')
 
     # Display sample texts in a selectbox
-    text = st.selectbox('Choose a sample text:', sample_texts)
+    selected_option = st.selectbox('Choose a sample text or write your own:', sample_texts)
 
-    # NLTK Stemming
-    nltk_stemmed_words = [nltk_stemmer.stem(word) for word in text.split()]
+    # Check if user selected the custom text option
+    if selected_option == "Write Custom Sentence":
+        text = st.text_input("Write your sentence here:")  # Display text input
+    else:
+        text = selected_option
 
+    # Only process if text is available
+    if text:
+        # NLTK Stemming
+        nltk_stemmed_words = [nltk_stemmer.stem(word) for word in text.split()]
 
-    # NLTK Lemmatization
-    nltk_lemmatized_words = [nltk_lemmatizer.lemmatize(word) for word in text.split()]
+        # NLTK Lemmatization
+        nltk_lemmatized_words = [nltk_lemmatizer.lemmatize(word) for word in text.split()]
 
+        # spaCy Lemmatization
+        spacy_doc = nlp(text)
+        spacy_lemmatized_words = [token.lemma_ for token in spacy_doc]
 
-    # spaCy Lemmatization
-    spacy_doc = nlp(text)
-    spacy_lemmatized_words = [token.lemma_ for token in spacy_doc]
+        # Display results side by side
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown("**NLTK Stemming**")
+            st.write(' '.join(nltk_stemmed_words))
 
-    # Display results side by side
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("**NLTK Stemming**")
-        st.write(' '.join(nltk_stemmed_words))
+        with col2:
+            st.markdown("**NLTK Lemmatization**")
+            st.write(' '.join(nltk_lemmatized_words))
 
-    with col2:
-        st.markdown("**NLTK Lemmatization**")
-        st.write(' '.join(nltk_lemmatized_words))
-
-    with col3:
-        st.markdown("**spaCy Lemmatization**")
-        st.write(' '.join(spacy_lemmatized_words))
+        with col3:
+            st.markdown("**spaCy Lemmatization**")
+            st.write(' '.join(spacy_lemmatized_words))
 
 if __name__ == '__main__':
     main()
