@@ -10,8 +10,6 @@ import numpy as np
 # Load the spaCy model
 nlp = spacy.load("en_core_web_sm")
 
-# Load the sentence-transformers model
-model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # Function to load data
 @st.cache_data
